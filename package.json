@@ -25,7 +25,8 @@
     "jest": "^21.1.0"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "lint": "./node_modules/.bin/eslint **/*.js"
   },
   "jest": {
     "testEnvironment": "node"

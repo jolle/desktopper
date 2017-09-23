@@ -1,30 +1,28 @@
 const electron = require('electron');
-const path = require('path');
-const url = require('url');
 
 const { app, BrowserWindow } = electron;
 
 let mainWindow;
 
 const createWindow = () => {
-    mainWindow = new BrowserWindow({width: 800, height: 600});
+    mainWindow = new BrowserWindow({ width: 800, height: 600 });
 
     mainWindow.loadURL('__TEMPLATE_URL__');
 
     mainWindow.on('closed', () => {
         mainWindow = null;
     });
-}
+};
 
-app.on('ready', createWindow)
+app.on('ready', createWindow);
 
-app.on('window-all-closed', function () {
+app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
         app.quit();
     }
 });
 
-app.on('activate', function () {
+app.on('activate', () => {
     if (mainWindow === null) {
         createWindow();
     }
