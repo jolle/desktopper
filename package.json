@@ -1,0 +1,9 @@
+{
+  "name": "desktopper",
+  "version": "0.0.1",
+  "description": "Website packager",
+  "main": "index.js",
+  "repository": "https://github.com/jolle/desktopper",
+  "author": "jolle <jolle@users.noreply.github.com>",
+  "license": "MIT"
+}
