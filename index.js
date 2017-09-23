@@ -8,6 +8,7 @@ const Promise = require('bluebird');
 const pngToIco = require('png-to-ico');
 const png2icns = require('png2icns');
 const path = require('path');
+const del = require('del');
 require('colors');
 
 const capitalize = (str) => str.substr(0, 1).toUpperCase() + str.substr(1);
@@ -36,19 +37,19 @@ module.exports = (rootUrl) => {
     const boilerplater = Promise.promisify(ncp)('template/', 'temp/').then(() => fs.writeFileSync('temp/index.js', fs.readFileSync('temp/index.js').toString().replace('__TEMPLATE_URL__', rootUrl)));
 
     const name = capitalize(rootUrl.replace(/https?:\/\//, '').split('.')[0] || 'Application');
+    let buildPath;
     return Promise.all([converter, boilerplater]).then(() => packager({
         dir: 'temp/',
         icon: 'temp/icon.' + (process.platform === 'darwin' ? 'icns' : 'ico'),
         quiet: true,
         name,
         overwrite: true,
-    })).then((buildPath) => {
-        fs.renameSync(path.join(buildPath[0], `${name}.app`), path.join(__dirname, `${name}.app`))
-        fs.unlinkSync('temp');
-        fs.unlinkSync(buildPath[0]);
-
-        return path.join(__dirname, `${name}.app`);
-    });
+    }))
+    .then((build) => buildPath = build)
+    .then(() => del(['temp'].concat(fs.existsSync(path.join(__dirname, `${name}.app`)) ? [path.join(__dirname, `${name}.app`)] : [])))
+    .then(() => Promise.promisify(fs.rename)(path.join(buildPath[0], `${name}.app`), path.join(__dirname, `${name}.app`)))
+    .then(() => del([buildPath[0]]))
+    .then(() => path.join(__dirname, `${name}.app`));
 };
 
 if (require.main === module) {
