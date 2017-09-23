@@ -3,5 +3,5 @@ node_js:
   - "6"
 script:
   - npm run lint
-  - npm test --runInBand
+#  - npm test --runInBand
 sudo: false
