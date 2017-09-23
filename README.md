@@ -1,7 +1,7 @@
 <p align="center">
-    <h1>Desktopper</h1>
+    <b>Desktopper</b>
 </p>
 <p align="center">
-    [![Build Status](https://travis-ci.org/jolle/desktopper.svg?branch=master)](https://travis-ci.org/jolle/desktopper)
+    <a href="https://travis-ci.org/jolle/desktopper"><img src="https://travis-ci.org/jolle/desktopper.svg?branch=master" alt="Build Status"></a>
 </p>
 Package your favourite website into desktop applications.
